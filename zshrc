@@ -62,9 +62,10 @@ POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=
 #Rbenv
 #eval "$(direnv hook bash)"
-eval "$(rbenv init -)";
 export PATH="/usr/local/heroku/bin:/Users/tristandruyen/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin"
 
+export PATH="$HOME/.bin:$PATH"
+eval "$(rbenv init - --no-rehash zsh)"
 #Default User to hide beginning
 export DEFAULT_USER="tristandruyen"
 
@@ -78,6 +79,8 @@ source $(brew --prefix nvm)/nvm.sh
 #oh my zsh###############################
 source $ZSH/oh-my-zsh.sh
 
+#CUSTOM THEME
+
 function ruby_version()
 {
     if which rvm-prompt &> /dev/null; then
@@ -89,13 +92,18 @@ function ruby_version()
     fi
 }
 
+function ruby_version2()
+{
+  ruby --version | ag "\s(\d.{1}\d.{1}\d)" -o -m 1 --silent
+}
+
 function battery_charge {
     echo `python ~/bin/batcharge.py` 2>/dev/null
 }
 
 RPROMPT_PREFIX='%{'$'\e[1A''%}' # one line up
 RPROMPT_SUFFIX='%{'$'\e[1B''%}' # one line down
-RPROMPT=$RPROMPT_PREFIX'$(battery_charge) $(ruby_version)'$RPROMPT_SUFFIX
+RPROMPT=$RPROMPT_PREFIX'$(battery_charge) $(ruby_version2)'$RPROMPT_SUFFIX
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
@@ -121,3 +129,4 @@ export LANG=en_US.UTF-8
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
