@@ -54,12 +54,16 @@ plugins=(git autojump bundler osx rails brew rbenv zsh-syntax-highlighting)
 
 # User configuration#####################
 
+#Disable RPROMPT cause i set it manually
 POWERLEVEL9K_DISABLE_RPROMPT=true
+
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
 #Double lined Prompt
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+
 #Shorten Dir lenght
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=
+#POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
+
 #Rbenv
 #eval "$(direnv hook bash)"
 export PATH="/usr/local/heroku/bin:/Users/tristandruyen/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin"
@@ -69,15 +73,18 @@ eval "$(rbenv init - --no-rehash zsh)"
 #Default User to hide beginning
 export DEFAULT_USER="tristandruyen"
 
-export LSCOLORS=ExFxBxDxCxegedabagacad
-alias ls='ls -GFh'
-export CLICOLOR=1
 
+#NVM
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
 #oh my zsh###############################
 source $ZSH/oh-my-zsh.sh
+
+#LS Colors
+export LSCOLORS=exfxcxdxbxegedabagacad
+alias ls='ls -GFh'
+export CLICOLOR=1
 
 #CUSTOM THEME
 
@@ -130,3 +137,6 @@ export LANG=en_US.UTF-8
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+#internal and external ip
+alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias localip='ipconfig getifaddr en0'

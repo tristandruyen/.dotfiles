@@ -1,0 +1,16 @@
+#!/bin/sh
+
+brew_tap 'caskroom/cask'
+brew_install_or_upgrade 'brew-cask'
+
+brew cask install dropbox
+brew cask install google-chrome
+brew cask install spotify
+
+brew_install_or_upgrade 'tree'
+brew_install_or_upgrade 'watch'
+brew_install_or_upgrade 'vim'
+
+rbenv install 2.2.0
+rbenv install 2.2.3
+rbenv install 2.0.0-p647
