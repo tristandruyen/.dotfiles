@@ -24,8 +24,6 @@ set undofile
 """""""""""""""""""""""""""""""""""""
 
 "Search
-nnoremap / /\v
-vnoremap / /\v
 set ignorecase
 set smartcase
 set gdefault
@@ -46,10 +44,6 @@ set background=dark
 colorscheme solarized
 
 let mapleader=" "
-nnoremap <C-r> gg=G
-
-"easy switching back to normal
-inoremap jj <ESC>
 
 "folding
 set foldmethod=syntax
@@ -75,8 +69,13 @@ set colorcolumn=80
 "Mouse Comp
 set mouse=a
 set ttymouse=xterm2
+"Backup
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set backupskip=/tmp/*,/private/tmp/*
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set writebackup
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -97,6 +96,19 @@ nnoremap <right> <nop>
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
+
+"search
+nnoremap / /\v
+vnoremap / /\v
+
+"search and replace
+nnoremap <leader>r :%s/
+
+"easy switching back to normal
+inoremap jj <ESC>
+
+"reindent
+nnoremap <C-r> gg=G
 
 "switch splits
 nnoremap <C-h> <C-w>h
@@ -173,6 +185,7 @@ set wildignore+=*/tmp/**
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -197,7 +210,22 @@ au Syntax * RainbowParenthesesLoadBraces
 "Tagbar
 nmap <C-m> :TagbarToggle<CR>
 """""""""""""""""""""""""""""""""""""""
+"Yuml
+nnoremap <F5> :w<CR> :silent Make<CR>
+inoremap <F5> <Esc>:w<CR>:silent Make<CR>
+vnoremap <F5> :<C-U>:w<CR>:silent Make<CR>
+autocmd BufRead *.uml :let &makeprg = 'suml --svg -i % > %.svg'
 
 
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
