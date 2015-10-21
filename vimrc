@@ -211,9 +211,9 @@ au Syntax * RainbowParenthesesLoadBraces
 nmap <C-m> :TagbarToggle<CR>
 """""""""""""""""""""""""""""""""""""""
 "Yuml
-nnoremap <F5> :w<CR> :silent Make<CR>
-inoremap <F5> <Esc>:w<CR>:silent Make<CR>
-vnoremap <F5> :<C-U>:w<CR>:silent Make<CR>
+nnoremap <F5> :w<CR> :silent Make<CR> :redraw!<CR>
+inoremap <F5> <Esc>:w<CR>:silent Make<CR> :redraw!<CR>
+vnoremap <F5> :<C-U>:w<CR>:silent Make<CR> :redraw!<CR>
 autocmd BufRead *.uml :let &makeprg = 'suml --svg -i % > %.svg'
 
 
