@@ -40,6 +40,8 @@ set modelines=0
 
 "Colorscheme
 "let g:solarized_termcolors=256
+let g:solarized_visibility= "high"
+let g:solarized_contrast = "high"
 set background=dark
 colorscheme solarized
 
