@@ -60,6 +60,8 @@ POWERLEVEL9K_DISABLE_RPROMPT=true
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
 #Double lined Prompt
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+#Default User to hide beginning
+export DEFAULT_USER="tristandruyen"
 
 #Shorten Dir lenght
 #POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
@@ -69,9 +71,8 @@ POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 export PATH="/usr/local/heroku/bin:/Users/tristandruyen/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin"
 
 export PATH="$HOME/.bin:$PATH"
+eval "$(direnv hook zsh)"
 eval "$(rbenv init - --no-rehash zsh)"
-#Default User to hide beginning
-export DEFAULT_USER="tristandruyen"
 
 
 #NVM
