@@ -141,3 +141,5 @@ export LANG=en_US.UTF-8
 #internal and external ip
 alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias localip='ipconfig getifaddr en0'
+alias rk='rake'
+alias rt='echo use rk instead'
