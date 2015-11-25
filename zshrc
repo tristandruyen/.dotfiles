@@ -50,7 +50,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git autojump bundler osx rails brew rbenv zsh-syntax-highlighting)
+plugins=(git autojump bundler osx rails brew rbenv zsh-syntax-highlighting zsh-dwim)
 
 # User configuration#####################
 
