@@ -73,7 +73,7 @@ export PATH="/usr/local/heroku/bin:/Users/tristandruyen/.rbenv/shims:/usr/local/
 export PATH="$HOME/.bin:$PATH"
 eval "$(direnv hook zsh)"
 eval "$(rbenv init - --no-rehash zsh)"
-
+eval "$(docker-machine env dev)"
 
 #NVM
 export NVM_DIR=~/.nvm
