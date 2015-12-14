@@ -218,7 +218,10 @@ inoremap <F5> <Esc>:w<CR>:silent Make<CR> :redraw!<CR>
 vnoremap <F5> :<C-U>:w<CR>:silent Make<CR> :redraw!<CR>
 autocmd BufRead *.uml :let &makeprg = 'suml --svg -i % > %.svg'
 
+"polyglot
+let g:polyglot_disabled = ['ruby']
 
+"""""""""""""""""""""""""""""""""""""""
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep
