@@ -120,7 +120,7 @@ function ruby_version2()
 }
 
 function batcharge2(){
-battery_level_gauge
+  battery_level_gauge
 }
 
 function batcharge {
