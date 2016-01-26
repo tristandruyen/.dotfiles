@@ -50,14 +50,14 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git autojump bundler osx rails brew rbenv zsh-syntax-highlighting zsh-dwim)
+plugins=(git battery autojump bundler osx rails brew rbenv zsh-syntax-highlighting zsh-dwim)
 
 # User configuration#####################
 
 #Disable RPROMPT cause i set it manually
 POWERLEVEL9K_DISABLE_RPROMPT=true
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
 #Double lined Prompt
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 #Default User to hide beginning
@@ -91,13 +91,13 @@ export CLICOLOR=1
 
 function ruby_version()
 {
-    if which rvm-prompt &> /dev/null; then
-      rvm-prompt i v g
-    else
-      if which rbenv &> /dev/null; then
-        rbenv version | sed -e "s/ (set.*$//"
-      fi
+  if which rvm-prompt &> /dev/null; then
+    rvm-prompt i v g
+  else
+    if which rbenv &> /dev/null; then
+      rbenv version | sed -e "s/ (set.*$//"
     fi
+  fi
 }
 
 function ruby_version2()
@@ -105,13 +105,17 @@ function ruby_version2()
   ruby --version | ag "\s(\d.{1}\d.{1}\d)" -o -m 1 --silent
 }
 
-function battery_charge {
-    echo `python ~/bin/batcharge.py` 2>/dev/null
+function batcharge2(){
+battery_level_gauge
+}
+
+function batcharge {
+  echo `python ~/bin/batcharge.py` 2>/dev/null
 }
 
 RPROMPT_PREFIX='%{'$'\e[1A''%}' # one line up
 RPROMPT_SUFFIX='%{'$'\e[1B''%}' # one line down
-RPROMPT=$RPROMPT_PREFIX'$(battery_charge) $(ruby_version2)'$RPROMPT_SUFFIX
+RPROMPT=$RPROMPT_PREFIX'$(batcharge2) $(ruby_version2)'$RPROMPT_SUFFIX
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
@@ -143,3 +147,8 @@ alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias localip='ipconfig getifaddr en0'
 alias rk='rake'
 alias rt='echo use rk instead'
+alias gca='git add -A && git commit -a'
+alias gcam='git add -A && git commit -am'
+alias cd-='cd ~'
+
+test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
