@@ -50,8 +50,22 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git battery autojump bundler osx rails brew rbenv zsh-syntax-highlighting zsh-dwim)
+plugins=(git web-search battery last-working-dir autojump bundler osx rails brew rbenv zsh-syntax-highlighting zsh-dwim)
 
+#PLUGINS:###########
+#-GIT
+#-WEB-SEARCH
+#-BATTERY GAUGE
+#-LAST WORJUBG DIRECTORY
+#-AUTOJUMP
+#-BUNDLER
+#-OSX
+#-RAILS
+#-BREW
+#-RBENV
+#-ZSH-SYNTAX-HIGHLIGHTING
+#-ZSH-DWIM
+#
 # User configuration#####################
 
 #Disable RPROMPT cause i set it manually
