@@ -164,5 +164,6 @@ alias rt='echo use rk instead'
 alias gca='git add -A && git commit -a'
 alias gcam='git add -A && git commit -am'
 alias cd-='cd ~'
+alias tag='ctags -R .'
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
