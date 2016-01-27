@@ -86,7 +86,7 @@ export PATH="/usr/local/heroku/bin:/Users/tristandruyen/.rbenv/shims:/usr/local/
 
 export PATH="$HOME/.bin:$PATH"
 eval "$(direnv hook zsh)"
-eval "$(rbenv init - --no-rehash zsh)"
+eval "$(rbenv init - zsh)"
 #eval "$(docker-machine env dev)"
 
 #NVM
@@ -155,6 +155,9 @@ export LANG=en_US.UTF-8
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+
+export PGDATA=/usr/local/var/postgres
 
 #internal and external ip
 alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
