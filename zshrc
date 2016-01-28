@@ -82,7 +82,7 @@ export DEFAULT_USER="tristandruyen"
 
 #Rbenv
 #eval "$(direnv hook bash)"
-export PATH="/usr/local/heroku/bin:/Users/tristandruyen/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin"
+export PATH="/usr/local/heroku/bin:/Users/tristandruyen/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin"
 
 export PATH="$HOME/.bin:$PATH"
 eval "$(direnv hook zsh)"
