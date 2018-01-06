@@ -45,3 +45,5 @@ if [ -z $LC_ALL ]; then
 fi
 
 export PGDATA=/usr/local/var/postgres
+
+export GOPATH=/Users/tristandruyen/Code/go

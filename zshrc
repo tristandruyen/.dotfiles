@@ -21,6 +21,7 @@ zplug "lib/termsupport", from:oh-my-zsh
 zplug "lib/theme-and-appearance", from:oh-my-zsh
 ########################################
 # Oh My Zsh Plugins
+zplug "gusaiani/elixir-oh-my-zsh"
 zplug "plugins/autojump", from:oh-my-zsh
 zplug "plugins/bundler", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
@@ -104,6 +105,8 @@ alias ccat='pygmentize -g -O style=colorful'
 # internal and external ip
 alias globalip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias localip='ipconfig getifaddr en0'
+alias ls=exa
+alias la="ls -la"
 
 # osx lockscr
 alias lockscr='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
@@ -145,15 +148,12 @@ function make_rel {
 
 # Function to switch and save the current path
 
-function cd() {
-  builtin cd "$@";
-  if [ $PWD != "/Users/tristandruyen" ]; then
-    echo "$PWD" > ~/.cwd;
-  fi
-}
-
-export cd
-alias cwd='cd $(cat ~/.cwd)'
-
-
-cwd
+# function cd() {
+#   builtin cd "$@";
+#   if [ $PWD != "/Users/tristandruyen" ]; then
+#     echo "$PWD" > ~/.cwd;
+#   fi
+# }
+# export cd
+# alias cwd='cd $(cat ~/.cwd)'
+# cwd
