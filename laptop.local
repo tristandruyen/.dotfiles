@@ -14,8 +14,7 @@ brew_install_or_upgrade 'watch'
 brew_install_or_upgrade 'vim'
 
 #some rubies
-rbenv install 2.2.0
-rbenv install 2.2.3
-rbenv install 2.0.0-p647
-rbenv install 2.3.0
-rbenv install 2.2.4
+asdf ruby install 2.3.3
+asdf ruby install 2.4.0
+asdf ruby install 2.3.4
+asdf ruby install 2.3.0
