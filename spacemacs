@@ -347,6 +347,7 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ;; (setq-default mac-right-option-modifier nil)
+  (setq ispell-program-name "/usr/local/bin/aspell")
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
   (defun toggle-camelcase-underscores ()
     "Toggle between camelcase and underscore notation for the symbol at point."
