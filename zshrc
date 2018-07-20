@@ -146,6 +146,8 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
 export PGDATA=/usr/local/var/postgres
 
@@ -176,7 +178,7 @@ asdf_dir=$HOME/.asdf
 $HOME/.asdf/asdf.sh
 $HOME/.asdf/completions/asdf.bash
 export PATH="${asdf_dir}/bin:${asdf_dir}/shims:$PATH"
-export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin/
+export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin/:/Users/tristandruyen/bin/
 
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
