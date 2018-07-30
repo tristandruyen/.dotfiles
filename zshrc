@@ -1,12 +1,11 @@
 # Path to your oh-my-zsh installation.
-export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 export ZSH=/Users/tristandruyen/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+ZSH_THEME=""
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -50,7 +49,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(docker docker-compose git web-search battery last-working-dir autojump bundler osx rails brew rbenv zsh-syntax-highlighting zsh-dwim zsh-autosuggestions)
+plugins=(docker docker-compose git battery last-working-dir autojump bundler osx brew zsh-syntax-highlighting zsh-autosuggestions)
 
 #PLUGINS:###########
 #-GIT
@@ -68,40 +67,37 @@ plugins=(docker docker-compose git web-search battery last-working-dir autojump 
 #
 # User configuration#####################
 
-#Disable RPROMPT cause i set it manually
-POWERLEVEL9K_DISABLE_RPROMPT=true
+#CUSTOM THEME
+RPROMPT_PREFIX='%{'$'\e[1A''%}' # lineup
+RPROMPT_SUFFIX='%{'$'\e[1B''%}' # linedown
+RPROMPT=$RPROMPT_PREFIX'$(batcharge2) '$RPROMPT_SUFFIX
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
-#Double lined Prompt
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+#Disable RPROMPT cause i set it manually
+# POWERLEVEL9K_DISABLE_RPROMPT=true
+
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
+# #Double lined Prompt
+# POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 #Default User to hide beginning
 export DEFAULT_USER="tristandruyen"
 
 #Shorten Dir lenght
 #POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 
-#Rbenv
-export PATH="/usr/local/heroku/bin:/Users/tristandruyen/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin"
-
-export PATH="$HOME/.bin:$PATH"
-#eval "$(docker-machine env dev)"
-
-#NVM
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
-
 # Hub github stuff
 eval "$(hub alias -s)"
-
+     
 #oh my zsh###############################
 source $ZSH/oh-my-zsh.sh
 
-#LS Colors
-export LSCOLORS=exfxcxdxbxegedabagacad
-alias ls='ls -GFh'
-export CLICOLOR=1
 
-#CUSTOM THEME
+# goolge cloud sdk
+. '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+. '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+
+# asdf
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
 
 function ruby_version2()
 {
@@ -116,12 +112,7 @@ function batcharge {
   echo `python ~/bin/batcharge.py` 2>/dev/null
 }
 
-RPROMPT_PREFIX='%{'$'\e[1A''%}' # one line up
-RPROMPT_SUFFIX='%{'$'\e[1B''%}' # one line down
-RPROMPT=$RPROMPT_PREFIX'$(batcharge2) $(ruby_version2)'$RPROMPT_SUFFIX
-
 # You may need to manually set your language environment
-export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -130,7 +121,6 @@ export LANG=en_US.UTF-8
 #   export EDITOR='nvim'
 # fi
 
-export EDITOR='vim'
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -146,13 +136,10 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
-export PGDATA=/usr/local/var/postgres
-
+alias ccat='pygmentize -g -O style=colorful'
 #internal and external ip
-alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias globalip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias localip='ipconfig getifaddr en0'
 alias lockscr='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
 alias rk='rake'
@@ -174,12 +161,11 @@ function searep {
 }
 
 fpath=(/usr/local/share/zsh-completions $fpath)
-asdf_dir=$HOME/.asdf
-$HOME/.asdf/asdf.sh
-$HOME/.asdf/completions/asdf.bash
-export PATH="${asdf_dir}/bin:${asdf_dir}/shims:$PATH"
-export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin/:/Users/tristandruyen/bin/
+fpath=( "$HOME/.zfunctions" $fpath )
 
+# test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
-test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+eval "$(direnv hook zsh)"
 
+autoload -U promptinit; promptinit
+prompt purity

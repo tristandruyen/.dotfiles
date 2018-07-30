@@ -358,9 +358,9 @@ you should place your code here."
       (push 'spacemacs-buffer-mode indent-guide-inhibit-modes))
 
     ;; configure indent guide
-    ;; (set-face-background 'indent-guide-face "dimgray")
+    (set-face-background 'indent-guide-face "dimgray")
     ;; (setq indent-guide-char "·")
-    ;; (setq indent-guide-recursive t)
+    (setq indent-guide-recursive t)
     (setq indent-guide-delay 0.1)
     )
 
