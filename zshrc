@@ -85,7 +85,7 @@ export DEFAULT_USER="tristandruyen"
 #POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 
 # Hub github stuff
-eval "$(hub alias -s)"
+# eval "$(hub alias -s)"
      
 #oh my zsh###############################
 source $ZSH/oh-my-zsh.sh
@@ -98,19 +98,6 @@ source $ZSH/oh-my-zsh.sh
 # asdf
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
-
-function ruby_version2()
-{
-  ruby --version | ag "\s(\d.{1}\d.{1}\d)" -o -m 1 --silent
-}
-
-function batcharge2(){
-  battery_level_gauge
-}
-
-function batcharge {
-  echo `python ~/bin/batcharge.py` 2>/dev/null
-}
 
 # You may need to manually set your language environment
 
