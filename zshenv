@@ -12,3 +12,4 @@ export LANG=en_US.UTF-8
 
 export PGDATA=/usr/local/var/postgres
 
+. $HOME/.asdf/asdf.sh

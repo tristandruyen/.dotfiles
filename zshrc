@@ -1,76 +1,67 @@
-# Path to your oh-my-zsh installation.
-export ZSH=/Users/tristandruyen/.oh-my-zsh
+############################ ZPLUG
+source $HOME/.zplug/init.zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME=""
+# General
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
+zplug "djui/alias-tips"
+zplug "mafredri/zsh-async", from:github, defer:0
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+# Libs
+zplug "lib/functions", from:oh-my-zsh, defer:0
+zplug "lib/completion", from:oh-my-zsh
+zplug "lib/directories", from:oh-my-zsh
+zplug "lib/history", from:oh-my-zsh
+zplug "lib/key-bindings", from:oh-my-zsh
+zplug "lib/termsupport", from:oh-my-zsh
+zplug "lib/theme-and-appearance", from:oh-my-zsh
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+# Oh My Zsh Plugins
+zplug "plugins/bundler", from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/docker", from:oh-my-zsh
+zplug "plugins/docker-compose", from:oh-my-zsh
+zplug "intelfx/pure", use:pure.zsh, from:github, as:theme
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+# Custom Plugins
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-history-substring-search", defer:3
+zplug "tarruda/zsh-autosuggestions", use:"dist/autosuggestions.zsh"
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+# install/update
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+echo -n "."
+zplug load
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(docker docker-compose git battery last-working-dir autojump bundler osx brew zsh-syntax-highlighting zsh-autosuggestions)
-
-#PLUGINS:###########
-#-GIT
-#-WEB-SEARCH
-#-BATTERY GAUGE
-#-LAST WORJUBG DIRECTORY
-#-AUTOJUMP
-#-BUNDLER
-#-OSX
-#-RAILS
-#-BREW
-#-RBENV
-#-ZSH-SYNTAX-HIGHLIGHTING
-#-ZSH-DWIM
-#
 # User configuration#####################
+PURE_PROMPT_SYMBOL='❯'
+PURE_GIT_DOWN_ARROW='↓'
+PURE_GIT_UP_ARROW='↑'
+RPROMPT='❮%F{grey}%*'
+PROMPT='%(?.${PURE_PROMPT_SYMBOL}.%F{red}✖)%f '
+
+autoload -U promptinit; promptinit
+
+_prompt_hostname() {
+  preprompt+=( "%F{red} $(hostname -s) %f" )
+}
+
+prompt pure
+# add the generator where it's needed
+prompt_pure_pieces=(
+	_prompt_hostname
+	${prompt_pure_pieces:0}
+)
 
 #CUSTOM THEME
-RPROMPT_PREFIX='%{'$'\e[1A''%}' # lineup
-RPROMPT_SUFFIX='%{'$'\e[1B''%}' # linedown
-RPROMPT=$RPROMPT_PREFIX'$(batcharge2) '$RPROMPT_SUFFIX
+# RPROMPT_PREFIX='%{'$'\e[1A''%}' # lineup
+# RPROMPT_SUFFIX='%{'$'\e[1B''%}' # linedown
+# RPROMPT=$RPROMPT_PREFIX'$(batcharge2) '$RPROMPT_SUFFIX
 
 #Disable RPROMPT cause i set it manually
 # POWERLEVEL9K_DISABLE_RPROMPT=true
@@ -87,8 +78,6 @@ export DEFAULT_USER="tristandruyen"
 # Hub github stuff
 # eval "$(hub alias -s)"
      
-#oh my zsh###############################
-source $ZSH/oh-my-zsh.sh
 
 
 # goolge cloud sdk
@@ -147,12 +136,10 @@ function searep {
   find . -name '*.ex' -print -exec sed -i '' 's/${$1}/${$2}/g' {} \;
 }
 
-fpath=(/usr/local/share/zsh-completions $fpath)
-fpath=( "$HOME/.zfunctions" $fpath )
+# fpath=(/usr/local/share/zsh-completions $fpath)
+# fpath=( "$HOME/.zfunctions" $fpath )
 
 # test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
 eval "$(direnv hook zsh)"
 
-autoload -U promptinit; promptinit
-prompt purity
