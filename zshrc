@@ -16,6 +16,7 @@ zplug "lib/termsupport", from:oh-my-zsh
 zplug "lib/theme-and-appearance", from:oh-my-zsh
 
 # Oh My Zsh Plugins
+zplug "plugins/autojump", from:oh-my-zsh
 zplug "plugins/bundler", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
@@ -58,27 +59,14 @@ prompt_pure_pieces=(
 	${prompt_pure_pieces:0}
 )
 
-#CUSTOM THEME
-# RPROMPT_PREFIX='%{'$'\e[1A''%}' # lineup
-# RPROMPT_SUFFIX='%{'$'\e[1B''%}' # linedown
-# RPROMPT=$RPROMPT_PREFIX'$(batcharge2) '$RPROMPT_SUFFIX
+#########################################
+# Misc###################################
 
-#Disable RPROMPT cause i set it manually
-# POWERLEVEL9K_DISABLE_RPROMPT=true
-
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
-# #Double lined Prompt
-# POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-#Default User to hide beginning
 export DEFAULT_USER="tristandruyen"
 
-#Shorten Dir lenght
-#POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 
 # Hub github stuff
 # eval "$(hub alias -s)"
-     
-
 
 # goolge cloud sdk
 . '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
@@ -88,29 +76,11 @@ export DEFAULT_USER="tristandruyen"
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
 
-# You may need to manually set your language environment
+eval "$(direnv hook zsh)"
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+#########################################
+# Aliases########################################
 
 
 alias ccat='pygmentize -g -O style=colorful'
@@ -140,6 +110,3 @@ function searep {
 # fpath=( "$HOME/.zfunctions" $fpath )
 
 # test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
-
-eval "$(direnv hook zsh)"
-
