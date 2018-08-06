@@ -1,5 +1,4 @@
 # Super duper helpers to put dir in path at specified pos only if it exists overwriting current PATH occurance
-
 function put_path_front {
   [[ ":$PATH:" == *":$1:"* ]] && PATH="${PATH//$1:/}"
   if [ -d "$1" ]; then
@@ -8,7 +7,7 @@ function put_path_front {
 }
 
 function put_path_back {
-  [[ ":$PATH:" == *":$1:"* ]] && PATH="${PATH//$1:/}"
+  [[ ":$PATH:" == *":$1:"* ]] && PATH="${PATH//:$1/}"
   if [ -d "$1" ]; then
     export PATH="$PATH:$1";
   fi
@@ -33,5 +32,15 @@ alias ls='ls -GFh'
 export CLICOLOR=1
 
 export EDITOR='vim'
+
+if [ -z $LANGUAGE ]; then
+  export LANGUAGE="en_US.UTF-8"
+fi
+if [ -z $LANG ]; then
+ export LANG="en_US.UTF-8"
+fi
+if [ -z $LC_ALL ]; then
+  export LC_ALL="en_US.UTF-8"
+fi
 
 export PGDATA=/usr/local/var/postgres

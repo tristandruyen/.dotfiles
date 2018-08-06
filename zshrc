@@ -31,12 +31,12 @@ zplug "tarruda/zsh-autosuggestions", use:"dist/autosuggestions.zsh"
 
 # install/update
 if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
 fi
-echo -n "."
+
 zplug load
 
 # User configuration#####################
@@ -55,8 +55,8 @@ _prompt_hostname() {
 prompt pure
 # add the generator where it's needed
 prompt_pure_pieces=(
-	_prompt_hostname
-	${prompt_pure_pieces:0}
+  # _prompt_hostname
+  ${prompt_pure_pieces:0}
 )
 
 #########################################
@@ -68,18 +68,25 @@ export DEFAULT_USER="tristandruyen"
 # Hub github stuff
 # eval "$(hub alias -s)"
 
-# goolge cloud sdk
-. '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-. '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+# gcloud sdk#######
+if [ -d '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/' ]; then
+  . '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+  . '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+fi
 
+###################
 # asdf
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
-
+if [ -d $HOME/.asdf ]; then
+  . $HOME/.asdf/asdf.sh
+  . $HOME/.asdf/completions/asdf.bash
+fi
+##################
+# direnv
 eval "$(direnv hook zsh)"
-
-
 #########################################
+
+
+
 # Aliases########################################
 
 
