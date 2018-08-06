@@ -52,13 +52,13 @@ _prompt_hostname() {
   preprompt+=( "%F{red} $(hostname -s) %f" )
 }
 
-prompt pure
+# prompt pure
 # add the generator where it's needed
-prompt_pure_pieces=(
-  # _prompt_hostname
-  ${prompt_pure_pieces:0}
-)
-
+# prompt_pure_pieces=(
+#   _prompt_hostname
+#   ${prompt_pure_pieces:0}
+# )
+#
 #########################################
 # Misc###################################
 
@@ -82,7 +82,10 @@ if [ -d $HOME/.asdf ]; then
 fi
 ##################
 # direnv
-eval "$(direnv hook zsh)"
+
+if [ $(type direnv >/dev/null 2>&1) ]; then
+  eval "$(direnv hook zsh)"
+fi
 #########################################
 
 
