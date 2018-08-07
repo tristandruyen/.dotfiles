@@ -1,4 +1,6 @@
 # ZPLUG ########################################################################
+#
+#
 # INIT #######
 source $HOME/.zplug/init.zsh
 
@@ -43,6 +45,8 @@ fi
 zplug load
 ################################################################################
 # User prompt configuration#####################################################
+#
+#
 PURE_PROMPT_SYMBOL='❯'
 PURE_GIT_DOWN_ARROW='↓'
 PURE_GIT_UP_ARROW='↑'
@@ -64,7 +68,8 @@ _prompt_hostname() {
 #
 ################################################################################
 # Misc##########################################################################
-
+#
+#
 export DEFAULT_USER="tristandruyen"
 # gcloud sdk#######
 if [ -d '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/' ]; then
@@ -90,6 +95,8 @@ fi
 
 ################################################################################
 # Aliases########################################
+#
+#
 # cat with syntax highlighting
 alias ccat='pygmentize -g -O style=colorful'
 # internal and external ip
