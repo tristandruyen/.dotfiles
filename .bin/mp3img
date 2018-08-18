@@ -1,0 +1,28 @@
+#!/bin/bash
+
+SourceFile="$1"
+if [ ! -r "$SourceFile" ] ; then
+    echo "Usage: $0 <image> [<lameopts>]"
+    exit 1
+fi
+
+BaseName="$(basename "$SourceFile" | sed 's/\(.*\)\..*/\1/')"
+Original="$BaseName.original.png"
+
+if [ ! -r "$Original" ] ; then
+    echo "making $Original ..."
+    convert "$SourceFile" -colorspace gray "$Original" || exit 1
+else
+    echo "using the existing version of $Original"
+fi
+
+Dimensions="$(identify "$Original" | tr ' ' '\n' | egrep '[0-9]+x[0-9]+' | head -1 | tr x ' ')"
+convert "$Original" mp3img.gray || exit 1
+
+shift
+BaseName="$BaseName.$(tr -d ' \n\t\v' <<< "$*")"
+lame -r -s 24 --resample 24 --bitwidth 8 -m m $* mp3img.gray "$BaseName.mp3" || exit 1
+lame --decode -x -t "$BaseName.mp3" mp3img.gray || exit 1
+python -c "import sys;sys.stdout.write('P5\n$Dimensions\n255\n'+''.join([chr((ord(c)+128)&255) for c in sys.stdin.read()[::2]]))" <mp3img.gray >mp3img.pgm
+convert mp3img.pgm "$BaseName.png" || exit 1
+rm -f mp3img.{gray,pgm}

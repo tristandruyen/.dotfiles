@@ -24,8 +24,8 @@ put_path_back "/usr/local/MacGPG2/bin"
 put_path_back "/Library/TeX/texbin"
 put_path_back "/Library/Frameworks/Mono.framework/Versions/Current/bin/"
 
-put_path_back "$HOME/.bin/"
-put_path_back "$HOME/bin/"
+put_path_back "$HOME/.bin"
+put_path_back "$HOME/bin"
 
 export LSCOLORS=exfxcxdxbxegedabagacad
 alias ls='ls -GFh'
