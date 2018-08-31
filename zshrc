@@ -131,4 +131,12 @@ function dcuc {
 function searep {
   find . -name '*.ex' -print -exec sed -i '' 's/${$1}/${$2}/g' {} \;
 }
+
+function make_rel {
+  echo "Building local/$(pwd)"
+  docker-compose build --pull
+  docker-compose run app &&
+    docker-compose down -v --remove-orphans
+  docker build "local/$(pwd)", "-f Dockerfile.release --pull ."
+}
 ################################################################################
