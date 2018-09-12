@@ -133,10 +133,10 @@ function searep {
 }
 
 function make_rel {
-  echo "Building local/$(pwd)"
+  echo "Building quay.io/invisionag/${PWD##*/}"
   docker-compose build --pull
   docker-compose run app &&
     docker-compose down -v --remove-orphans
-  docker build "local/$(pwd)", "-f Dockerfile.release --pull ."
+  docker build "quay.io/invisionag/${PWD##*/}", "-f Dockerfile.release --pull ."
 }
 ################################################################################
