@@ -27,7 +27,6 @@ zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/docker-compose", from:oh-my-zsh
 zplug "intelfx/pure", use:pure.zsh, from:github, as:theme
-
 ########################################
 # Custom Plugins
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
@@ -68,8 +67,6 @@ _prompt_hostname() {
 #
 ################################################################################
 # Misc##########################################################################
-#
-#
 export DEFAULT_USER="tristandruyen"
 # gcloud sdk#######
 if [ -d '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/' ]; then
@@ -93,6 +90,11 @@ fi
 # Hub github stuff
 # eval "$(hub alias -s)"
 
+##################
+# graalvm
+if [ -d $HOME/mycellar ]; then
+  export GRAALVM_HOME=$HOME/mycellar/graalvm
+fi
 ################################################################################
 # Aliases#######################################################################
 #
