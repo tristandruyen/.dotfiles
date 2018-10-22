@@ -1,4 +1,5 @@
 # Super duper helpers to put dir in path at specified pos only if it exists overwriting current PATH occurance
+
 function put_path_front {
   [[ ":$PATH:" == *":$1:"* ]] && PATH="${PATH//$1:/}"
   if [ -d "$1" ]; then
@@ -31,7 +32,7 @@ export LSCOLORS=exfxcxdxbxegedabagacad
 alias ls='ls -GFh'
 export CLICOLOR=1
 
-export EDITOR='vim'
+export EDITOR='ec'
 
 if [ -z $LANGUAGE ]; then
   export LANGUAGE="en_US.UTF-8"

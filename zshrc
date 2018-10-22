@@ -92,7 +92,7 @@ fi
 
 ##################
 # graalvm
-if [ -d $HOME/mycellar ]; then
+if [ -d $HOME/mycellar/graalvm ]; then
   export GRAALVM_HOME=$HOME/mycellar/graalvm
 fi
 ################################################################################
