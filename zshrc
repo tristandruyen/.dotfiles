@@ -107,7 +107,7 @@ alias localip='ipconfig getifaddr en0'
 
 # osx lockscr
 alias lockscr='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
-
+alias lscr=lockscr
 
 # extra rake/ruby
 alias rk='rake'
@@ -120,7 +120,7 @@ alias gcam='git add -A && git commit -S -am'
 alias gc='git commit -S'
 
 # extra miscs
-alias cd-='cd ~'
+# alias cd-='cd ~'
 alias tag='ctags -R .'
 alias ydl='youtube-dl'
 alias ec='emacsclient'
@@ -138,7 +138,23 @@ function make_rel {
   echo "Building quay.io/invisionag/${PWD##*/}"
   docker-compose build --pull
   docker-compose run app &&
-    docker-compose down -v --remove-orphans
+  docker-compose down -v --remove-orphans
   docker build "quay.io/invisionag/${PWD##*/}", "-f Dockerfile.release --pull ."
 }
 ################################################################################
+
+# Function to switch and save the current path
+
+function cd() {
+  builtin cd "$@";
+  if [ $PWD != "/Users/tristandruyen" ]; then
+    echo $PWD;
+    echo "$PWD" > ~/.cwd;
+  fi
+}
+
+export cd
+alias cwd='cd $(cat ~/.cwd)'
+
+
+cwd
