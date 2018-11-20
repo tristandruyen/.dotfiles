@@ -148,7 +148,6 @@ function make_rel {
 function cd() {
   builtin cd "$@";
   if [ $PWD != "/Users/tristandruyen" ]; then
-    echo $PWD;
     echo "$PWD" > ~/.cwd;
   fi
 }
