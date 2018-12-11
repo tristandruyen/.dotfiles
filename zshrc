@@ -125,6 +125,10 @@ alias tag='ctags -R .'
 alias ydl='youtube-dl'
 alias ec='emacsclient'
 
+function gotest {
+  go test | sed ''/PASS/s//$(printf "\033[32mPASS\033[0m")/'' | sed ''/FAIL/s//$(printf "\033[31mFAIL\033[0m")/''
+}
+
 # alias functions
 function dcuc {
   docker-compose pull $1 && docker-compose up -d --build $1
