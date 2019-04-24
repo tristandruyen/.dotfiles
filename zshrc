@@ -27,10 +27,15 @@ zplug "plugins/bundler", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/docker-compose", from:oh-my-zsh
+zplug "oknowton/zsh-dwim", from:github, defer:1
+
+########################################
+# Theme
+# zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
 zplug "intelfx/pure", use:pure.zsh, from:github, as:theme
 ########################################
 # Custom Plugins
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-history-substring-search", defer:3
 zplug "tarruda/zsh-autosuggestions", use:"dist/autosuggestions.zsh"
 ############################################################
@@ -47,6 +52,7 @@ zplug load
 # User prompt configuration#####################################################
 #
 #
+SPACESHIP_DOCKER_SHOW=false
 PURE_PROMPT_SYMBOL='❯'
 PURE_GIT_DOWN_ARROW='↓'
 PURE_GIT_UP_ARROW='↑'
@@ -100,6 +106,11 @@ fi
 # Aliases#######################################################################
 #
 #
+# CHEAT
+function cheat() {
+    curl cht.sh/$1
+}
+
 # cat with syntax highlighting
 alias ccat='pygmentize -g -O style=colorful'
 # internal and external ip
@@ -116,21 +127,38 @@ alias lscr=lockscr
 alias rk='rake'
 alias rt='echo use rk instead'
 alias ra='rubocop -a'
+alias rark='ra && rk'
 
 # extra git
-alias gca='git add -A && git commit -S -a'
-alias gcam='git add -A && git commit -S -am'
-alias gc='git commit -S'
+# alias commit='commit -S'
+alias gca='git add -A && git commit -a'
+alias gcadd='git commit -a'
+alias gcam='git add -A && git commit -am'
 
 # extra miscs
 # alias cd-='cd ~'
 alias tag='ctags -R .'
 alias ydl='youtube-dl'
+
+# EMACS RULES
 alias ec='emacsclient'
+alias ect='emacsclient -t'
+# vi()
+#   {
+#       emacs -nw --eval '(and (switch-to-buffer "foobar") (setq viper-mode t) (setq viper-inhibit-startup-message t) (setq viper-expert-level 1) (viper-mode))' "$@"
+#   }
+
+# alias vim=vi
+# alias vim.tiny=vi
+# alias vim.basic=vi
 
 # alias functions
 function dcuc {
   docker-compose pull $1 && docker-compose up -d --build $1
+}
+
+function do_until_fail {
+  while [ $? -eq 0 ]; do; eval $1; done
 }
 
 function searep {
@@ -145,6 +173,22 @@ function make_rel {
   docker build "quay.io/invisionag/${PWD##*/}", "-f Dockerfile.release --pull ."
 }
 ################################################################################
+
+function lie {
+  if [[ "$1" == "not" ]]
+  then
+    unset GIT_AUTHOR_DATE
+    unset GIT_COMMITTER_DATE
+    return 0
+  fi
+  export GIT_AUTHOR_DATE="$1"
+  export export GIT_COMMITTER_DATE="$1"
+}
+alias datestring='date +"%Y%m%d%H%M%S"'
+
+# if [ -z $TMUX ]; then
+#   tmux
+# fi
 
 # Function to switch and save the current path
 

@@ -33,7 +33,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(rust
      (auto-completion :variables
                       auto-completion-complete-with-key-sequence "jk"
                       auto-completion-complete-with-key-sequence-delay 0.15
@@ -41,6 +41,7 @@ This function should only modify configuration layer settings."
      better-defaults
      chrome
      csv
+     (c-c++ :variables c-c++-enable-clang-support t)
      clojure
      docker
      elixir
@@ -48,24 +49,29 @@ This function should only modify configuration layer settings."
      ;; extra-langs
      git
      (go :variables go-tab-width 4
-                    go-use-golangci-lint t
                     go-backend 'lsp
                     godoc-at-point-function 'godoc-gogetdoc
+                    go-format-before-save t
+                    go-tab-width 4
+                    go-use-test-args "-race -count=1"
                     gofmt-command "goimports")
-     graphviz
+     ;; graphviz
+     games
      helm
      html
-     lsp
+     (lsp :variables lsp-ui-doc-enable nil
+                     lsp-ui-sideline-enable nil)
      markdown
      ;; multiple-cursors
      nginx
-     org
+     (org :variables org-enable-github-support t)
      (osx :variables osx-use-option-as-meta nil)
      ;; python
      react
      restclient
      (ruby :variables ruby-enable-enh-ruby-mode t
            ruby-test-runner 'rspec)
+     semantic
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -79,6 +85,7 @@ This function should only modify configuration layer settings."
                  typescript-fmt-on-save t)
      version-control
      yaml
+     ;; ycmd
      ;; javascript
      ;; itome-react
      ;; flow
@@ -104,6 +111,7 @@ This function should only modify configuration layer settings."
                                       exec-path-from-shell
                                       edit-server
                                       cheat-sh
+                                      org-pomodoro
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -238,7 +246,7 @@ It should only modify the values of Spacemacs settings."
                          spacemacs-light)
 
    ;; set the theme for the spaceline. supported themes are `spacemacs',
-   ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. the
+   ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. th
    ;; first three are spaceline themes. `doom' is the doom-emacs mode-line.
    ;; `vanilla' is default emacs mode-line. `custom' is a user defined themes,
    ;; refer to the documentation.org for more info on how to create your own
@@ -312,7 +320,7 @@ It should only modify the values of Spacemacs settings."
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
    ;; (default 'cache)
-   dotspacemacs-auto-save-file-location 'cache
+   dotspacemacs-auto-save-file-location 'original
 
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
@@ -408,7 +416,6 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil `smartparens-strict-mode' will be enabled in programming modes.
    ;; (default nil)
-   ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
 
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
@@ -495,8 +502,8 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setenv "PKG_CONFIG_PATH" "/usr/local/Cellar/zlib/1.2.8/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig")
-  ;; (setq max-specpdl-size 32000)
-  ;; (setq max-lisp-eval-depth 16000)
+  (setq max-specpdl-size 32000)
+  (setq max-lisp-eval-depth 16000)
   )
 
 (defun dotspacemacs/user-load ()
@@ -507,12 +514,11 @@ dump."
   )
 
 (defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
+  "Configuration for user code:
+This function is called at the very end of Spacemacs startup, after layer
+configuration.
+Put your configuration code here, except for variables that should be set
+before packages are loaded."
   (setq powerline-default-separator 'chamfer)
   ; ELIXIR FORMAT
   (add-hook 'elixir-mode-hook
@@ -543,9 +549,7 @@ you should place your code here."
     ;; (set-face-background 'indent-guide-face "dimgray")
     ;; (setq indent-guide-char "·")
     (setq indent-guide-recursive t)
-    (setq indent-guide-delay 0.1)
-  )
-
+    (setq indent-guide-delay 0.1))
   ;; disable indent-guide in visual mode
   (add-hook 'evil-visual-state-entry-hook #'spacemacs/toggle-indent-guide-off)
   (add-hook 'evil-visual-state-exit-hook #'spacemacs/toggle-indent-guide-on)
@@ -583,8 +587,9 @@ you should place your code here."
           (replace-regexp "\\([A-Z]\\)" "_\\1" nil (1+ start) end)
           (downcase-region start (cdr (bounds-of-thing-at-point 'symbol)))))))
   ;; (remove-hook 'react-mode-hook 'tern-mode)
-  (setq mac-command-modifier 'meta
-        mac-option-modifier  'none)
+  (setq mac-command-modifier 'none
+        mac-option-modifier  'meta
+        mac-right-option-modifier  'none)
   (setq create-lockfiles nil)
   (setq ruby-insert-encoding-magic-comment nil)
   (setq enh-ruby-add-encoding-comment-on-save nil)
@@ -605,7 +610,7 @@ you should place your code here."
   (setq js2-mode-show-strict-warnings nil) ; fuck those warnings
   (setq-default
    ;; js2-mode
-   tab-width 2
+   ;; tab-width 2
    js2-basic-offset 2
    ;; react-basic-offset 2
    ;; web-mode

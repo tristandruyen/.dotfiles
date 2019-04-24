@@ -1,4 +1,4 @@
-# Super duper helpers to put dir in path at specified pos only if it exists overwriting current PATH occurance
+# Super duper helpers to put dir in path at specified pos only if target dir exists overwriting current PATH occurance
 
 function put_path_front {
   [[ ":$PATH:" == *":$1:"* ]] && PATH="${PATH//$1:/}"
@@ -29,10 +29,10 @@ put_path_back "$HOME/.bin"
 put_path_back "$HOME/bin"
 
 export LSCOLORS=exfxcxdxbxegedabagacad
-alias ls='ls -GFh'
+# alias ls='ls -GFh'
 export CLICOLOR=1
 
-export EDITOR='ec'
+export EDITOR='emacsclient -t'
 
 if [ -z $LANGUAGE ]; then
   export LANGUAGE="en_US.UTF-8"
@@ -46,4 +46,6 @@ fi
 
 export PGDATA=/usr/local/var/postgres
 
-export GOPATH=/Users/tristandruyen/Code/go
+export GOPATH=/Users/tristandruyen/go
+export GOROOT="/Users/tristandruyen/.asdf/installs/golang/1.11.4/go"
+put_path_front "$GOPATH/bin"
