@@ -86,6 +86,12 @@ if [ -d $HOME/.asdf ]; then
   . $HOME/.asdf/asdf.sh
   . $HOME/.asdf/completions/asdf.bash
 fi
+export ASDFROOT=$HOME/.asdf
+export ASDFINSTALLS=$HOME/.asdf/installs
+##################
+# GO
+GOV=$(asdf current golang | sed "s/[[:blank:]]*(set by .*)//g")
+# export GOROOT=$ASDFINSTALLS/golang/$GOV/go/
 ##################
 # direnv
 
@@ -122,6 +128,7 @@ alias la="ls -la"
 # osx lockscr
 alias lockscr='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
 alias lscr=lockscr
+alias lock=lockscr
 
 # extra rake/ruby
 alias rk='rake'
@@ -139,7 +146,7 @@ alias gcam='git add -A && git commit -am'
 # alias cd-='cd ~'
 alias tag='ctags -R .'
 alias ydl='youtube-dl'
-
+alias mip='sudo ifconfig lo0 alias 192.168.100.1'
 # EMACS RULES
 alias ec='emacsclient'
 alias ect='emacsclient -t'
@@ -185,7 +192,17 @@ function lie {
   export export GIT_COMMITTER_DATE="$1"
 }
 alias datestring='date +"%Y%m%d%H%M%S"'
+function multibox {
+    for var in "$@"
+    do
+        soundbox $var &
+    done
+}
 
+function fullpath { echo $(pwd)/$1 }
+
+alias clown='soundbox 6'
+alias ohrenkrebs="soundbox 1 & soundbox 2 & soundbox 3 & soundbox 0 & soundbox 4 & soundbox 5 & soundbox 9 & soundbox 10 & soundbox 11 & soundbox 12 & soundbox 13 & soundbox 14 & soundbox 15 & soundbox 16 & soundbox 17 & soundbox 18 & soundbox 19"
 # if [ -z $TMUX ]; then
 #   tmux
 # fi

@@ -46,6 +46,7 @@ fi
 
 export PGDATA=/usr/local/var/postgres
 
-export GOPATH=/Users/tristandruyen/go
-export GOROOT="/Users/tristandruyen/.asdf/installs/golang/1.11.4/go"
+export GOPATH=$HOME/go
+export GOBIN=$HOME/go/bin
+
 put_path_front "$GOPATH/bin"

@@ -46,17 +46,16 @@ This function should only modify configuration layer settings."
      docker
      elixir
      emacs-lisp
-     ;; extra-langs
+     games
      git
-     (go :variables go-tab-width 4
-                    go-backend 'lsp
+     (go :variables go-backend 'lsp
                     godoc-at-point-function 'godoc-gogetdoc
                     go-format-before-save t
                     go-tab-width 4
                     go-use-test-args "-race -count=1"
                     gofmt-command "goimports")
      ;; graphviz
-     games
+     groovy
      helm
      html
      (lsp :variables lsp-ui-doc-enable nil
@@ -107,6 +106,7 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
+                                      ;; groovy
                                       company-flow
                                       exec-path-from-shell
                                       edit-server
@@ -493,7 +493,8 @@ This function defines the environment variables for your Emacs session. By
 default it calls `spacemacs/load-spacemacs-env' which loads the environment
 variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
 See the header of this file for more information."
-  (spacemacs/load-spacemacs-env))
+  ;; (spacemacs/load-spacemacs-env)
+  )
 
 (defun dotspacemacs/user-init ()
   "Initialization for user code:
@@ -519,7 +520,23 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (setq powerline-default-separator 'chamfer)
+  ;; MATCHIT
+  ;; (global-evil-matchit-mode 1)
+  ;; (add-hook 'ruby-mode-hook 'evil-matchit-mode)
+  ;; (add-hook 'evil-matchit-mode-hook (evil-define-key 'normal
+  ;;   "d a %" 'evilmi-delete-items))
+  ;; (evil-define-key 'normal "d a %" 'evilmi-delete-items)
+  ;;-------------------------
+  ;;-------------------------
+  ;; Save all tempfiles in $TMPDIR/emacs$UID/
+  (defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
+  (setq backup-directory-alist
+        `((".*" . ,emacs-tmp-dir)))
+  (setq auto-save-file-name-transforms
+        `((".*" ,emacs-tmp-dir t)))
+  (setq auto-save-list-file-prefix
+        emacs-tmp-dir)
+  ;; (setq powerline-default-separator 'chamfer)
   ; ELIXIR FORMAT
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
@@ -628,3 +645,23 @@ before packages are loaded."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (groovy-mode groovy-imports pcache zenburn-theme zen-and-art-theme yasnippet-snippets yaml-mode xterm-color ws-butler writeroom-mode winum white-sand-theme which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill underwater-theme ujelly-theme typit twilight-theme twilight-bright-theme twilight-anti-bright-theme treemacs-projectile treemacs-evil toxi-theme toml-mode toc-org tide tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit symon sunny-day-theme sudoku sublime-themes subatomic256-theme subatomic-theme string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe rjsx-mode reverse-theme reveal-in-osx-finder restclient-helm restart-emacs rebecca-theme rbenv rake rainbow-delimiters railscasts-theme racer purple-haze-theme pug-mode professional-theme prettier-js popwin planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode password-generator paradox pacmacs ox-gfm overseer osx-trash osx-dictionary osx-clipboard orgit organic-green-theme org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme ob-restclient ob-http ob-elixir noctilux-theme nginx-mode naquadah-theme nameless mwim mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minitest minimal-theme material-theme markdown-toc majapahit-theme magit-svn magit-gitflow madhat2r-theme macrostep lush-theme lsp-ui lsp-treemacs lorem-ipsum livid-mode link-hint light-soap-theme launchctl kaolin-themes json-navigator js2-refactor js-doc jbeans-theme jazz-theme ir-black-theme inkpot-theme indent-guide import-js impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme helm-xref helm-themes helm-swoop helm-rtags helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate google-c-style golden-ratio godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gmail-message-mode gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md gandalf-theme fuzzy font-lock+ flyspell-popup flyspell-correct-helm flymd flycheck-rust flycheck-rtags flycheck-pos-tip flycheck-package flycheck-mix flycheck-credo flx-ido flatui-theme flatland-theme fill-column-indicator farmhouse-theme fancy-battery eziam-theme eyebrowse expand-region exotica-theme exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu espresso-theme eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav editorconfig edit-server dumb-jump dracula-theme dotenv-mode doom-themes doom-modeline dockerfile-mode docker django-theme disaster diminish diff-hl darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme csv-mode cquery counsel-projectile company-web company-tern company-statistics company-rtags company-restclient company-quickhelp company-lsp company-go company-flow company-c-headers column-enforce-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme clojure-snippets clean-aindent-mode clang-format cider-eval-sexp-fu cider chruby cherry-blossom-theme cheat-sh centered-cursor-mode ccls cargo busybee-theme bundler bubbleberry-theme browse-at-remote birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes alchemist aggressive-indent afternoon-theme ace-link ace-jump-helm-line ac-ispell 2048-game))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
