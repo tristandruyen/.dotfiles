@@ -34,10 +34,11 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(rust
-     (auto-completion :variables
-                      auto-completion-complete-with-key-sequence "jk"
-                      auto-completion-complete-with-key-sequence-delay 0.15
-                      auto-completion-enable-help-tooltip 'manual)
+     auto-completion
+     ;; (auto-completion :variables
+     ;;                  auto-completion-complete-with-key-sequence "jk"
+     ;;                  auto-completion-complete-with-key-sequence-delay 0.15
+     ;;                  ompletion-enable-help-tooltip 'automatic)
      better-defaults
      chrome
      csv
@@ -68,8 +69,7 @@ This function should only modify configuration layer settings."
      ;; python
      react
      restclient
-     (ruby :variables ruby-enable-enh-ruby-mode t
-           ruby-test-runner 'rspec)
+     (ruby :variables ruby-test-runner 'rspec)
      semantic
      (shell :variables
             shell-default-height 30
@@ -107,7 +107,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       ;; groovy
-                                      company-flow
+                                      ;; company-flow
                                       exec-path-from-shell
                                       edit-server
                                       cheat-sh
@@ -609,7 +609,7 @@ before packages are loaded."
         mac-right-option-modifier  'none)
   (setq create-lockfiles nil)
   (setq ruby-insert-encoding-magic-comment nil)
-  (setq enh-ruby-add-encoding-comment-on-save nil)
+  ;; (setq enh-ruby-add-encoding-comment-on-save nil)
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
