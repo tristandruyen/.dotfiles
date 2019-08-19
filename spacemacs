@@ -45,6 +45,7 @@ This function should only modify configuration layer settings."
      (c-c++ :variables c-c++-enable-clang-support t)
      clojure
      docker
+     emoji
      elixir
      emacs-lisp
      games
@@ -59,8 +60,9 @@ This function should only modify configuration layer settings."
      groovy
      helm
      html
-     (lsp :variables lsp-ui-doc-enable nil
-                     lsp-ui-sideline-enable nil)
+     (lsp :variables ;; lsp-ui-doc-enable nil
+          ;; lsp-ui-sideline-enable nil
+          )
      markdown
      ;; multiple-cursors
      nginx
@@ -81,6 +83,7 @@ This function should only modify configuration layer settings."
      syntax-checking
      themes-megapack
      (typescript :variables
+                 typescript-backend 'lsp
                  typescript-fmt-on-save t)
      version-control
      yaml
@@ -108,6 +111,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-additional-packages '(
                                       ;; groovy
                                       ;; company-flow
+                                      ;; lsp-ruby
                                       exec-path-from-shell
                                       edit-server
                                       cheat-sh
@@ -236,11 +240,11 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         dracula
+                         material
                          monokai
                          ample-flat
                          solarized-light
-                         material
-                         dracula
                          solarized-dark
                          spacemacs-dark
                          spacemacs-light)
@@ -502,6 +506,7 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
+  ;; OS X
   (setenv "PKG_CONFIG_PATH" "/usr/local/Cellar/zlib/1.2.8/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig")
   (setq max-specpdl-size 32000)
   (setq max-lisp-eval-depth 16000)
@@ -520,6 +525,8 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  ;; Emoji
+  (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
   ;; MATCHIT
   ;; (global-evil-matchit-mode 1)
   ;; (add-hook 'ruby-mode-hook 'evil-matchit-mode)
@@ -607,8 +614,12 @@ before packages are loaded."
   (setq mac-command-modifier 'none
         mac-option-modifier  'meta
         mac-right-option-modifier  'none)
+  ;; RUBY -------------------------------
+  ;; (require 'lsp-ruby)
+  (add-hook 'ruby-mode-hook #'lsp)
   (setq create-lockfiles nil)
   (setq ruby-insert-encoding-magic-comment nil)
+  ;; ------------------------------------
   ;; (setq enh-ruby-add-encoding-comment-on-save nil)
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))

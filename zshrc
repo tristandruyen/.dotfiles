@@ -91,6 +91,7 @@ export ASDFINSTALLS=$HOME/.asdf/installs
 ##################
 # GO
 GOV=$(asdf current golang | sed "s/[[:blank:]]*(set by .*)//g")
+export GO111MODULE=on
 # export GOROOT=$ASDFINSTALLS/golang/$GOV/go/
 ##################
 # direnv
@@ -115,6 +116,21 @@ fi
 # CHEAT
 function cheat() {
     curl cht.sh/$1
+}
+
+# Transfer.sh
+transfer() {
+    # helptext
+    if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi
+    # rest
+    tmpfile=$( mktemp -t transferXXX );
+    if tty -s; then
+        basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g');
+        curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile;
+    else
+        curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ;
+    fi;
+    cat $tmpfile; rm -f $tmpfile;
 }
 
 # cat with syntax highlighting
@@ -161,7 +177,8 @@ alias ect='emacsclient -t'
 
 # alias functions
 function dcuc {
-  docker-compose pull $1 && docker-compose up -d --build $1
+  docker-compose pull ${@:1} && docker-compose up -d --build ${@:1}
+
 }
 
 function do_until_fail {
