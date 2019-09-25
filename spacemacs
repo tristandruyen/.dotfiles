@@ -50,17 +50,19 @@ This function should only modify configuration layer settings."
      emacs-lisp
      games
      git
+     github
      (go :variables go-backend 'lsp
                     godoc-at-point-function 'godoc-gogetdoc
                     go-format-before-save t
-                    go-tab-width 4
+                    go-tab-width 2
+                    ;; go-use-gocheck-for-testing t
                     go-use-test-args "-race -count=1"
                     gofmt-command "goimports")
      ;; graphviz
      groovy
      helm
      html
-     (lsp :variables ;; lsp-ui-doc-enable nil
+     (lsp :variables lsp-ui-doc-enable nil
           ;; lsp-ui-sideline-enable nil
           )
      markdown
