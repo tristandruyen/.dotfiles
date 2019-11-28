@@ -113,6 +113,12 @@ fi
 # Aliases#######################################################################
 #
 #
+# TMUX
+
+alias tmx="tmux attach || tmux new"
+# PACMAN
+alias pacsize='expac -H M "%011m\t%-20n\t%10d" $(comm -23 <(pacman -Qqen | sort) <(pacman -Qqg base base-devel | sort)) | sort -n'
+
 # CHEAT
 function cheat() {
     curl cht.sh/$1

@@ -18,7 +18,7 @@ This function should only modify configuration layer settings."
    ;; lazy install any layer that support lazy installation even the layers
    ;; listed in `dotspacemacs-configuration-layers'. `nil' disable the lazy
    ;; installation feature and you have to explicitly list a layer in the
-   ;; variable `dotspacemacs-configuration-layers' to install it.
+  ;; variable `dotspacemacs-configuration-layers' to install it.
    ;; (default 'unused)
    dotspacemacs-enable-lazy-installation 'unused
 
@@ -33,7 +33,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(rust
+   '(systemd
+     rust
      auto-completion
      ;; (auto-completion :variables
      ;;                  auto-completion-complete-with-key-sequence "jk"
@@ -63,8 +64,7 @@ This function should only modify configuration layer settings."
      helm
      html
      (lsp :variables lsp-ui-doc-enable nil
-          ;; lsp-ui-sideline-enable nil
-          )
+                     lsp-ui-sideline-enable nil)
      markdown
      ;; multiple-cursors
      nginx
@@ -267,11 +267,11 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("IBM Plex Mono"
-                               :size 14
+   dotspacemacs-default-font '("Input Mono"
+                               :size 18
                                :weight normal
                                :width normal
-                               :powerline-scale 1.3)
+                               :powerline-scale 1.0)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
 

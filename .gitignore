@@ -1,1 +1,4 @@
 *.un~
+test/Fonts
+test/Fonts*.tar.gz
+test/Fonts*.tar.gz

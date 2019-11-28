@@ -48,7 +48,8 @@ window:
   #     - none: Neither borders nor title bar
   #     - buttonless: Title bar, transparent background and title bar buttons
   #     - transparent: Title bar, transparent background, but no title bar buttons
-  decorations: transparent
+  # decorations: transparent
+  decorations: full
 
   # Startup Mode (changes require restart)
   #
@@ -77,7 +78,7 @@ scrolling:
   # to allow mouse scrolling for applications like `man`.
   #
   # Specifying `0` will disable faux scrolling.
-  faux_multiplier: 3
+  # faux_multiplier: 3
 
   # Scroll to the bottom when new text is written to the terminal.
   auto_scroll: false
@@ -89,40 +90,40 @@ scrolling:
 # Some applications, like Emacs, rely on knowing about the width of a tab.
 # To prevent unexpected behavior in these applications, it's also required to
 # change the `it` value in terminfo when altering this setting.
-tabspaces: 8
+tabspaces: 2
 
 # Font configuration (changes require restart)
 font:
   # Normal (roman) font face
   normal:
-    family: Input
+    family: "Input Mono"
     style: Regular
 
   # Bold font face
   bold:
-    family: Input
+    family: "Input Mono"
     style: Bold
 
   # Italic font face
   italic:
-    family: Input
+    family: "Input Mono"
     style: Italic
 
   # Point size
-  size: 15.0
+  size: 16.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
   offset:
     x: 0
-    y: 0
+    # y: -10
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the right,
   # increasing `y` moves the glyph upwards.
   glyph_offset:
     x: 0
-    y: -3
+    y: 0
 
   # Thin stroke font rendering (OS X only)
   #
@@ -290,6 +291,9 @@ selection:
   # When set to `true`, selected text will be copied to the primary clipboard.
   save_to_clipboard: false
 
+# Allow terminal applications to change Alacritty's window title.
+dynamic_title: true
+
 cursor:
   # Cursor style
   #
@@ -308,7 +312,8 @@ live_config_reload: true
 
 # Shell
 shell:
-  program: /usr/local/bin/zsh
+  program: /usr/sbin/zsh
+  # program: /usr/local/bin/zsh
   args:
     - --login
     - -c
