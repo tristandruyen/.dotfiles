@@ -150,12 +150,14 @@ alias ccat='pygmentize -g -O style=colorful'
 alias globalip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias localip='ipconfig getifaddr en0'
 alias ls=exa
-alias la="ls -la"
+alias la="ls -lahg"
 
 # osx lockscr
 alias lockscr='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
 alias lscr=lockscr
 alias lock=lockscr
+
+export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 # extra rake/ruby
 alias rk='rake'
@@ -207,6 +209,13 @@ function make_rel {
   docker-compose down -v --remove-orphans
   docker build "quay.io/invisionag/${PWD##*/}", "-f Dockerfile.release --pull ."
 }
+# Workarounds
+
+alias xcopy="xclip -sel clip"
+alias xpaste="xclip -o -sel clip"
+
+# keybase
+# export XDG_RUNTIME_DIR=/run/user/$UID
 ################################################################################
 
 function lie {
@@ -246,3 +255,5 @@ alias ohrenkrebs="soundbox 1 & soundbox 2 & soundbox 3 & soundbox 0 & soundbox 4
 # export cd
 # alias cwd='cd $(cat ~/.cwd)'
 # cwd
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

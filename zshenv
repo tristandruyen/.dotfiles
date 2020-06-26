@@ -14,6 +14,8 @@ function put_path_back {
   fi
 }
 
+put_path_back "/home/tristand/code/scry/bin/"
+put_path_back "/home/tristand/bin"
 put_path_back "/usr/local/sbin"
 put_path_back "/usr/local/bin"
 put_path_back "/usr/sbin"
@@ -21,6 +23,8 @@ put_path_back "/usr/bin"
 put_path_back "/sbin"
 put_path_back "/bin"
 put_path_back "/opt/X11/bin"
+put_path_back "/opt/X11/bin"
+put_path_back "/usr/lib/elixir-ls/"
 put_path_back "/usr/local/MacGPG2/bin"
 put_path_back "/Library/TeX/texbin"
 put_path_back "/Library/Frameworks/Mono.framework/Versions/Current/bin/"
