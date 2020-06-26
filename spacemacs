@@ -18,7 +18,7 @@ This function should only modify configuration layer settings."
    ;; lazy install any layer that support lazy installation even the layers
    ;; listed in `dotspacemacs-configuration-layers'. `nil' disable the lazy
    ;; installation feature and you have to explicitly list a layer in the
-  ;; variable `dotspacemacs-configuration-layers' to install it.
+   ;; variable `dotspacemacs-configuration-layers' to install it.
    ;; (default 'unused)
    dotspacemacs-enable-lazy-installation 'unused
 
@@ -33,14 +33,27 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(systemd
+   '(
+     (python :variables
+             python-backend 'anaconda
+             ;; python-lsp-server 'mspyls
+             python-test-runner 'pytest
+             python-formatter 'black
+             python-format-on-save t
+             python-fill-column 100)
+     windows-scripts
+     vimscript
+     systemd
+     crystal
      rust
+     ;; rust-indent-offset 2)
      auto-completion
      ;; (auto-completion :variables
      ;;                  auto-completion-complete-with-key-sequence "jk"
      ;;                  auto-completion-complete-with-key-sequence-delay 0.15
      ;;                  ompletion-enable-help-tooltip 'automatic)
      better-defaults
+     (neotree :variables neo-theme 'icons)
      chrome
      csv
      (c-c++ :variables c-c++-enable-clang-support t)
@@ -53,18 +66,18 @@ This function should only modify configuration layer settings."
      git
      github
      (go :variables go-backend 'lsp
-                    godoc-at-point-function 'godoc-gogetdoc
-                    go-format-before-save t
-                    go-tab-width 2
-                    ;; go-use-gocheck-for-testing t
-                    go-use-test-args "-race -count=1"
-                    gofmt-command "goimports")
+         godoc-at-point-function 'godoc-gogetdoc
+         go-format-before-save t
+         go-tab-width 2
+         ;; go-use-gocheck-for-testing t
+         go-use-test-args "-race -count=1"
+         gofmt-command "goimports")
      ;; graphviz
      groovy
      helm
      html
      (lsp :variables lsp-ui-doc-enable nil
-                     lsp-ui-sideline-enable nil)
+          lsp-ui-sideline-enable nil)
      markdown
      ;; multiple-cursors
      nginx
@@ -73,7 +86,9 @@ This function should only modify configuration layer settings."
      ;; python
      react
      restclient
-     (ruby :variables ruby-test-runner 'rspec)
+     (ruby :variables
+           ruby-backend 'lsp
+           ruby-test-runner 'rspec)
      semantic
      (shell :variables
             shell-default-height 30
@@ -89,6 +104,7 @@ This function should only modify configuration layer settings."
                  typescript-fmt-on-save t)
      version-control
      yaml
+     typescript
      ;; ycmd
      ;; javascript
      ;; itome-react
@@ -114,6 +130,11 @@ This function should only modify configuration layer settings."
                                       ;; groovy
                                       ;; company-flow
                                       ;; lsp-ruby
+                                      company-lsp
+                                      add-node-modules-path
+                                      dash
+                                      ht
+                                      crystal-mode
                                       exec-path-from-shell
                                       edit-server
                                       cheat-sh
@@ -124,7 +145,9 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(
+                                    spacemacs-theme
+                                    )
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -133,7 +156,7 @@ This function should only modify configuration layer settings."
    ;; installs only the used packages but won't delete unused ones. `all'
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
-   dotspacemacs-install-packages 'used-only))
+   dotspacemacs-install-packages 'used-but-keep-unused))
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -184,6 +207,7 @@ It should only modify the values of Spacemacs settings."
    ;; a locked version of packages. If nil then Spacemacs will install the
    ;; latest version of packages from MELPA. (default nil)
    dotspacemacs-use-spacelpa nil
+   ;; dotspacemacs-use-spacelpa t
 
    ;; If non-nil then verify the signature for downloaded Spacelpa archives.
    ;; (default nil)
@@ -217,7 +241,7 @@ It should only modify the values of Spacemacs settings."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner 'random
 
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
@@ -225,7 +249,7 @@ It should only modify the values of Spacemacs settings."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'.
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 5)
+   dotspacemacs-startup-lists '((recents . 10)
                                 (projects . 7))
 
    ;; True if the home buffer should respond to resize events. (default t)
@@ -258,20 +282,23 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the documentation.org for more info on how to create your own
    ;; spaceline theme. value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
+   ;; dotspacemacs-mode-line-theme `doom
+   ;; dotspacemacs-mode-line-theme '(all-the-icons :separator wave :separator-scale 1.5)
+   ;; dotspacemacs-mode-line-theme 'vim-powerline
    dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   ;; vim-powerline
+   ;; '(all-the-icons :separator chamfer :separator-scale 1.5)
 
    ;; if non-nil the cursor color matches the state color in gui emacs.
    ;; (default t)
-
    dotspacemacs-colorize-cursor-according-to-state t
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Input Mono"
-                               :size 18
+   dotspacemacs-default-font '("Delugia Nerd Font"
+                               :size 17
                                :weight normal
-                               :width normal
-                               :powerline-scale 1.0)
+                               :width normal)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
 
@@ -509,9 +536,23 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; OS X
+   (global-so-long-mode 1)
+
+  ;; (lsp-crystal-enable)
+
+  ;; (lsp-define-stdio-client lsp-crystal "crystal"
+  ;;                          #'crystal-find-project-root
+  ;;                          '("/usr/sbin/scry"))
+
+  ;; (provide 'lsp-crystal)
+
+  ;;; lsp-crystal.el ends here
   (setenv "PKG_CONFIG_PATH" "/usr/local/Cellar/zlib/1.2.8/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig")
   (setq max-specpdl-size 32000)
   (setq max-lisp-eval-depth 16000)
+  (setq read-process-output-max (* 1024 1024)) ;; 1mb
+  (setq lsp-prefer-capf t)
+  (setq lsp-idle-delay 0.500)
   )
 
 (defun dotspacemacs/user-load ()
@@ -522,13 +563,35 @@ dump."
   )
 
 (defun dotspacemacs/user-config ()
+  ;; long file fixes?
+
+  (add-hook 'python-mode-hook (lambda()
+                                (message "custom python hook")
+                                (flycheck-mode 1)
+                                (semantic-mode 1)
+                                (fci-mode 1)
+                                (setq flycheck-executable-find 'executable-find
+                                      flycheck-checker 'python-flake8
+                                      flycheck-python-flake8-executable "flake8"
+                                      flycheck-flake8rc ".flake8"
+                                      python-fill-column 100)
+                                ))
+  (setq cache-long-scans t)
+  (setq bidi-paragraph-direction 'left-to-right)
+  (setq bidi-inhipit-bpa t)
+
+  ;; (require 'lsp-mode)
+  ;; (load-file "/home/tristand/.emacs.d/private/local/rust-analyzer.el")
+  (require 'crystal-mode)
+
+  (setq neo-theme 'icons)
   "Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   ;; Emoji
-  (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
+  ;; (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
   ;; MATCHIT
   ;; (global-evil-matchit-mode 1)
   ;; (add-hook 'ruby-mode-hook 'evil-matchit-mode)
@@ -539,6 +602,7 @@ before packages are loaded."
   ;;-------------------------
   ;; Save all tempfiles in $TMPDIR/emacs$UID/
   (defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
+
   (setq backup-directory-alist
         `((".*" . ,emacs-tmp-dir)))
   (setq auto-save-file-name-transforms
@@ -546,13 +610,14 @@ before packages are loaded."
   (setq auto-save-list-file-prefix
         emacs-tmp-dir)
   ;; (setq powerline-default-separator 'chamfer)
-  ; ELIXIR FORMAT
+                                        ; ELIXIR FORMAT
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
   ;; GOLANG
-  (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize)
-    (exec-path-from-shell-copy-env "GOPATH"))
+  ;; (when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize)
+  ;; (exec-path-from-shell-copy-env ("GOPATH" "PATH"))
+  ;; (exec-path-from-shell-copy-env ("PATH"))
 
   ;; don't quit (daemon)
   (evil-leader/set-key
@@ -562,8 +627,8 @@ before packages are loaded."
   ;; disable non break space
   (global-set-key (kbd "M-SPC") 'nil)
   ;; Activate column indicator in prog-mode and text-mode
-  (add-hook 'prog-mode-hook 'turn-on-fci-mode)
-  (add-hook 'text-mode-hook 'turn-on-fci-mode)
+  ;; (add-hook 'prog-mode-hook 'turn-on-fci-mode)
+  ;; (add-hook 'text-mode-hook 'turn-on-fci-mode)
 
   ;;Indent Guide
   (with-eval-after-load 'indent-guide
@@ -581,8 +646,46 @@ before packages are loaded."
   (add-hook 'evil-visual-state-exit-hook #'spacemacs/toggle-indent-guide-on)
 
   ;; use indent-guide globally
-  (spacemacs/toggle-indent-guide-globally-on)
+  ;; (spacemacs/toggle-indent-guide-globally-on)
+  ;;----------------------------------------------------------------------------
+  ;; Crystal
 
+  ;; (setq lsp-clients-scry-executable "/usr/sbin/scry")
+  ;; (require 'lsp-mode)
+  ;; (require 'crystal-mode)
+
+  ;; (lsp-define-stdio-client lsp-crystal "crystal"
+  ;;                          #'crystal-find-project-root
+  ;;                          '("scry"))
+  ;; (provide 'lsp-crystal)
+
+  ;; (setq lsp-clients-crystal-executable '("/usr/sbin/scry" "--stdio"))
+  (setq lsp-clients-crystal-executable "/usr/sbin/scry")
+
+
+
+  ;; (with-eval-after-load 'lsp-mode
+  ;;   (require 'lsp-crystal)
+  ;;   (add-hook 'crystal-mode-hook (lambda ()
+  ;;                                  ;; disable unsupported features
+  ;;                                  (setq-local lsp-enable-eldoc nil)
+  ;;                                  (setq-local lsp-enable-eldoc nil)
+  ;;                                  (setq-local lsp-enable-codeaction nil)
+  ;;                                  (lsp-crystal-enable))))
+  ;; ;
+                                        ; lsp plain
+  (with-eval-after-load 'lsp-mode
+    (add-hook 'crystal-mode-hook (lambda ()
+                                   ;; disable unsupported features
+                                   (setq-local lsp-enable-eldoc nil)
+                                   (setq-local lsp-enable-eldoc nil)
+                                   (setq-local lsp-enable-codeaction nil)
+                                   (lsp))))
+
+  ;; (setq lsp-log-io t)
+
+  ;; (setq lsp-clients-scry "/usr/sbin/scry" lsp-clients-scry-args '("--stdio"))
+  ;;
   ;;----------------------------------------------------------------------------
   ;; React/Flow/JS(x)
   ;; (load-file "~/.emacs.d/private/flow/flow.el")
@@ -596,38 +699,68 @@ before packages are loaded."
   ;;----------------------------------------------------------------------------
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
-  (defun toggle-camelcase-underscores ()
-    "Toggle between camelcase and underscore notation for the symbol at point."
-    (interactive)
-    (save-excursion
-      (let* ((bounds (bounds-of-thing-at-point 'symbol))
-             (start (car bounds))
-             (end (cdr bounds))
-             (currently-using-underscores-p (progn (goto-char start)
-                                                   (re-search-forward "_" end t))))
-        (if currently-using-underscores-p
-            (progn
-              (upcase-initials-region start end)
-              (replace-string "_" "" nil start end)
-              (downcase-region start (1+ start)))
-          (replace-regexp "\\([A-Z]\\)" "_\\1" nil (1+ start) end)
-          (downcase-region start (cdr (bounds-of-thing-at-point 'symbol)))))))
+  ;; (defun toggle-camelcase-underscores ()
+  ;;   "Toggle between camelcase and underscore notation for the symbol at point."
+  ;;   (interactive)
+  ;;   (save-excursion
+  ;;     (let* ((bounds (bounds-of-thing-at-point 'symbol))
+  ;;            (start (car bounds))
+  ;;            (end (cdr bounds))
+  ;;            (currently-using-underscores-p (progn (goto-char start)
+  ;;                                                  (re-search-forward "_" end t))))
+  ;;       (if currently-using-underscores-p
+  ;;           (progn
+  ;;             (upcase-initials-region start end)
+  ;;             (replace-string "_" "" nil start end)
+  ;;             (downcase-region start (1+ start)))
+  ;;         (replace-regexp "\\([A-Z]\\)" "_\\1" nil (1+ start) end)
+  ;;         (downcase-region start (cdr (bounds-of-thing-at-point 'symbol)))))))
   ;; (remove-hook 'react-mode-hook 'tern-mode)
+
+  (remove-hook 'elixir-mode-hook 'lsp-mode)
   (setq mac-command-modifier 'none
         mac-option-modifier  'meta
         mac-right-option-modifier  'none)
+
+  ;; CRYSTAL ---------------------------
+  (add-hook 'crystal-mode-hook (lambda ()
+                                 ;; disable unsupported features
+                                 (setq-local lsp-enable-eldoc nil)
+                                 (setq-local lsp-enable-eldoc nil)
+                                 (setq-local lsp-enable-codeaction nil)
+                                 (lsp)))
+
   ;; RUBY -------------------------------
   ;; (require 'lsp-ruby)
-  (add-hook 'ruby-mode-hook #'lsp)
+
+  (spacemacs|add-company-backends :backends company-lsp
+                                  :modes ruby-mode)
+
+
+  (eval-after-load 'ruby-mode
+    '(progn
+       (add-hook 'ruby-mode-hook #'prettier-js-mode)))
+
   (setq create-lockfiles nil)
   (setq ruby-insert-encoding-magic-comment nil)
+
+  ;; RUST -------------------------------
+  ;; (setq rust
+  (add-hook 'rust-mode-hook
+            (lambda () (setq rustic-indent-offset 2)))
+  ;; (setq rust-indent-offset 2)
+  (setq rustic-indent-offset 2)
+  ;; (setq rustic-indent-)
+  (setq-default rustic-indent-offset 2)
   ;; ------------------------------------
+
+  ;; WEB --------------------------------
   ;; (setq enh-ruby-add-encoding-comment-on-save nil)
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
-  ;; web development
+
   (setq js-indent-level 2)
   (setq coffee-tab-width 2) ; coffeescript
   (setq javascript-indent-level 2) ; javascript-mode
@@ -663,18 +796,18 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (groovy-mode groovy-imports pcache zenburn-theme zen-and-art-theme yasnippet-snippets yaml-mode xterm-color ws-butler writeroom-mode winum white-sand-theme which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill underwater-theme ujelly-theme typit twilight-theme twilight-bright-theme twilight-anti-bright-theme treemacs-projectile treemacs-evil toxi-theme toml-mode toc-org tide tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit symon sunny-day-theme sudoku sublime-themes subatomic256-theme subatomic-theme string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe rjsx-mode reverse-theme reveal-in-osx-finder restclient-helm restart-emacs rebecca-theme rbenv rake rainbow-delimiters railscasts-theme racer purple-haze-theme pug-mode professional-theme prettier-js popwin planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode password-generator paradox pacmacs ox-gfm overseer osx-trash osx-dictionary osx-clipboard orgit organic-green-theme org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme ob-restclient ob-http ob-elixir noctilux-theme nginx-mode naquadah-theme nameless mwim mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minitest minimal-theme material-theme markdown-toc majapahit-theme magit-svn magit-gitflow madhat2r-theme macrostep lush-theme lsp-ui lsp-treemacs lorem-ipsum livid-mode link-hint light-soap-theme launchctl kaolin-themes json-navigator js2-refactor js-doc jbeans-theme jazz-theme ir-black-theme inkpot-theme indent-guide import-js impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme helm-xref helm-themes helm-swoop helm-rtags helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate google-c-style golden-ratio godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gmail-message-mode gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md gandalf-theme fuzzy font-lock+ flyspell-popup flyspell-correct-helm flymd flycheck-rust flycheck-rtags flycheck-pos-tip flycheck-package flycheck-mix flycheck-credo flx-ido flatui-theme flatland-theme fill-column-indicator farmhouse-theme fancy-battery eziam-theme eyebrowse expand-region exotica-theme exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu espresso-theme eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav editorconfig edit-server dumb-jump dracula-theme dotenv-mode doom-themes doom-modeline dockerfile-mode docker django-theme disaster diminish diff-hl darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme csv-mode cquery counsel-projectile company-web company-tern company-statistics company-rtags company-restclient company-quickhelp company-lsp company-go company-flow company-c-headers column-enforce-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme clojure-snippets clean-aindent-mode clang-format cider-eval-sexp-fu cider chruby cherry-blossom-theme cheat-sh centered-cursor-mode ccls cargo busybee-theme bundler bubbleberry-theme browse-at-remote birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes alchemist aggressive-indent afternoon-theme ace-link ace-jump-helm-line ac-ispell 2048-game))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(package-selected-packages
+     (quote
+      (powershell zenburn-theme zen-and-art-theme yasnippet-snippets yaml-mode xterm-color ws-butler writeroom-mode winum white-sand-theme which-key web-mode web-beautify vterm volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill underwater-theme ujelly-theme typit twilight-theme twilight-bright-theme twilight-anti-bright-theme ts treemacs-projectile treemacs-magit treemacs-evil toxi-theme toml-mode toc-org tide terminal-here tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit systemd symon symbol-overlay sunny-day-theme sudoku sublime-themes subatomic256-theme subatomic-theme string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rjsx-mode reverse-theme reveal-in-osx-finder restclient-helm restart-emacs rebecca-theme rbenv rake rainbow-delimiters railscasts-theme racer purple-haze-theme pug-mode professional-theme prettier-js popwin play-crystal planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode peg password-generator paradox pacmacs ox-gfm overseer ov osx-trash osx-dictionary osx-clipboard orgit organic-green-theme org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme ob-restclient ob-http ob-elixir ob-crystal nodejs-repl noctilux-theme nginx-mode neotree naquadah-theme nameless mwim mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minitest minimal-theme material-theme markdown-toc majapahit-theme magit-svn magit-gitflow madhat2r-theme macrostep lush-theme lsp-ui lsp-treemacs lorem-ipsum livid-mode link-hint light-soap-theme launchctl kaolin-themes json-navigator js2-refactor js-doc jbeans-theme jazz-theme ir-black-theme inkpot-theme inf-crystal indent-guide impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme helm-xref helm-themes helm-swoop helm-rtags helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme groovy-mode groovy-imports grandshell-theme gotham-theme google-translate google-c-style golden-ratio godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gmail-message-mode gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md ggtags gandalf-theme fuzzy forge font-lock+ flyspell-popup flyspell-correct-helm flymd flycheck-ycmd flycheck-rust flycheck-rtags flycheck-pos-tip flycheck-package flycheck-mix flycheck-elsa flycheck-crystal flycheck-credo flx-ido flatui-theme flatland-theme fill-column-indicator farmhouse-theme fancy-battery eziam-theme eyebrowse expand-region exotica-theme exec-path-from-shell ewal-spacemacs-themes evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu espresso-theme eshell-z eshell-prompt-extras esh-help emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav editorconfig edit-server dumb-jump dracula-theme dotenv-mode doom-themes doom-modeline dockerfile-mode docker django-theme disaster diminish diff-hl devdocs define-word darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme dactyl-mode cyberpunk-theme csv-mode cquery cpp-auto-include counsel-gtags company-ycmd company-web company-tern company-statistics company-rtags company-restclient company-lsp company-go company-emoji company-c-headers column-enforce-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme clojure-snippets clean-aindent-mode clang-format cider-eval-sexp-fu cider chruby chocolate-theme cherry-blossom-theme cheat-sh centered-cursor-mode ccls cargo busybee-theme bundler bubbleberry-theme browse-at-remote birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme ameba alect-themes alchemist aggressive-indent afternoon-theme ace-link ace-jump-helm-line ac-ispell 2048-game))))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   )
+  )
