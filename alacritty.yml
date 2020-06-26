@@ -3,7 +3,7 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-#env:
+env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
@@ -11,6 +11,7 @@
   # check the local terminfo database and use 'alacritty' if it is
   # available, otherwise 'xterm-256color' is used.
   # TERM: xterm-256color
+  TERM: alacritty
 
 window:
   # Window dimensions (changes require restart)
@@ -81,7 +82,7 @@ scrolling:
   # faux_multiplier: 3
 
   # Scroll to the bottom when new text is written to the terminal.
-  auto_scroll: false
+  # auto_scroll: false
 
 # Spaces per Tab (changes require restart)
 #
@@ -90,24 +91,24 @@ scrolling:
 # Some applications, like Emacs, rely on knowing about the width of a tab.
 # To prevent unexpected behavior in these applications, it's also required to
 # change the `it` value in terminfo when altering this setting.
-tabspaces: 2
+# tabspaces: 2
 
 # Font configuration (changes require restart)
 font:
   # Normal (roman) font face
   normal:
-    family: "Input Mono"
+    family: "CaskaydiaCove Nerd Font"
     style: Regular
 
   # Bold font face
-  bold:
-    family: "Input Mono"
-    style: Bold
+  # bold:
+  #   family: "CaskaydiaCove Nerd Font"
+  #   style: Bold
 
   # Italic font face
-  italic:
-    family: "Input Mono"
-    style: Italic
+  # italic:
+  #   family: "CaskaydiaCove Nerd Font"
+  #   style: Italic
 
   # Point size
   size: 16.0

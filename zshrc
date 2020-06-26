@@ -1,8 +1,11 @@
+# #
+# source ~/.zshenv
 # ZPLUG ########################################################################
 #
+source /usr/share/zsh/scripts/zplug/init.zsh
 #
 # INIT #######
-source $HOME/.zplug/init.zsh
+# source ~/.zplug/init.zsh
 
 # PLUGINS ##################################################
 ########################################
@@ -27,12 +30,14 @@ zplug "plugins/bundler", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/docker-compose", from:oh-my-zsh
-zplug "oknowton/zsh-dwim", from:github, defer:1
+# zplug "oknowton/zsh-dwim", from:github, defer:1
 
 ########################################
 # Theme
+zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
 # zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
-zplug "intelfx/pure", use:pure.zsh, from:github, as:theme
+#oi 
+# zplug "intelfx/pure", use:pure.zsh, from:github, as:theme
 ########################################
 # Custom Plugins
 # zplug "zsh-users/zsh-syntax-highlighting", defer:2
@@ -46,7 +51,7 @@ if ! zplug check --verbose; then
     echo; zplug install
   fi
 fi
-
+#
 zplug load
 ################################################################################
 # User prompt configuration#####################################################

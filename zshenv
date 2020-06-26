@@ -27,6 +27,7 @@ put_path_back "/Library/Frameworks/Mono.framework/Versions/Current/bin/"
 
 put_path_back "$HOME/.bin"
 put_path_back "$HOME/bin"
+put_path_back "$HOME/.cargo/bin"
 
 export LSCOLORS=exfxcxdxbxegedabagacad
 # alias ls='ls -GFh'
