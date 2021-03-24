@@ -1,7 +1,6 @@
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
-
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings."
@@ -45,8 +44,8 @@ This function should only modify configuration layer settings."
      vimscript
      systemd
      crystal
-     rust
      ;; rust-indent-offset 2)
+     (rust :variables rust-backend 'lsp)
      auto-completion
      ;; (auto-completion :variables
      ;;                  auto-completion-complete-with-key-sequence "jk"
@@ -77,10 +76,13 @@ This function should only modify configuration layer settings."
      helm
      html
      (lsp :variables lsp-ui-doc-enable nil
-          lsp-ui-sideline-enable nil)
+                     lsp-rust-server 'rust-analyzer
+                     lsp-ui-sideline-enable nil)
+
      markdown
      ;; multiple-cursors
      nginx
+     spacemacs-editing
      (org :variables org-enable-github-support t)
      (osx :variables osx-use-option-as-meta nil)
      ;; python
@@ -104,7 +106,6 @@ This function should only modify configuration layer settings."
                  typescript-fmt-on-save t)
      version-control
      yaml
-     typescript
      ;; ycmd
      ;; javascript
      ;; itome-react
@@ -130,7 +131,7 @@ This function should only modify configuration layer settings."
                                       ;; groovy
                                       ;; company-flow
                                       ;; lsp-ruby
-                                      company-lsp
+                                      ;; company-lsp
                                       add-node-modules-path
                                       dash
                                       ht
@@ -266,6 +267,7 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         doom-gruvbox
                          dracula
                          material
                          monokai
@@ -536,6 +538,17 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; OS X
+  (setq comp-deferred-compilation t)
+
+  (if (functionp 'json-serialize)
+      (message "Native JSON is available")
+    (message "Native JSON is *not* available"))
+  (if (and (fboundp 'native-comp-available-p)
+           (native-comp-available-p))
+      (message "Native compilation is available")
+    (message "Native complation is *not* available"))
+
+
    (global-so-long-mode 1)
 
   ;; (lsp-crystal-enable)
@@ -560,7 +573,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 this function is called only while dumping spacemacs configuration. you can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
-  )
+   )
 
 (defun dotspacemacs/user-config ()
   ;; long file fixes?
@@ -623,7 +636,7 @@ before packages are loaded."
   (evil-leader/set-key
     "q q" 'spacemacs/frame-killer)
   ;;;;;;;;;
-  (global-company-mode)
+  ;; (global-company-mode)
   ;; disable non break space
   (global-set-key (kbd "M-SPC") 'nil)
   ;; Activate column indicator in prog-mode and text-mode
@@ -631,19 +644,19 @@ before packages are loaded."
   ;; (add-hook 'text-mode-hook 'turn-on-fci-mode)
 
   ;;Indent Guide
-  (with-eval-after-load 'indent-guide
-    (when (boundp 'indent-guide-inhibit-modes)
-      ;; fix for crash on home page
-      (push 'spacemacs-buffer-mode indent-guide-inhibit-modes))
+  ;; (with-eval-after-load 'indent-guide
+  ;;   (when (boundp 'indent-guide-inhibit-modes)
+  ;;     ;; fix for crash on home page
+  ;;     (push 'spacemacs-buffer-mode indent-guide-inhibit-modes))
 
-    ;; configure indent guide
-    ;; (set-face-background 'indent-guide-face "dimgray")
-    ;; (setq indent-guide-char "·")
-    (setq indent-guide-recursive t)
-    (setq indent-guide-delay 0.1))
+  ;;   ;; configure indent guide
+  ;;   ;; (set-face-background 'indent-guide-face "dimgray")
+  ;;   ;; (setq indent-guide-char "·")
+  ;;   (setq indent-guide-recursive t)
+    ;; (setq indent-guide-delay 0.1))
   ;; disable indent-guide in visual mode
-  (add-hook 'evil-visual-state-entry-hook #'spacemacs/toggle-indent-guide-off)
-  (add-hook 'evil-visual-state-exit-hook #'spacemacs/toggle-indent-guide-on)
+  ;; (add-hook 'evil-visual-state-entry-hook #'spacemacs/toggle-indent-guide-off)
+  ;; (add-hook 'evil-visual-state-exit-hook #'spacemacs/toggle-indent-guide-on)
 
   ;; use indent-guide globally
   ;; (spacemacs/toggle-indent-guide-globally-on)
@@ -733,8 +746,8 @@ before packages are loaded."
   ;; RUBY -------------------------------
   ;; (require 'lsp-ruby)
 
-  (spacemacs|add-company-backends :backends company-lsp
-                                  :modes ruby-mode)
+  ;; (spacemacs|add-company-backends :backends company-lsp
+  ;;                                 :modes ruby-mode)
 
 
   (eval-after-load 'ruby-mode
@@ -746,6 +759,10 @@ before packages are loaded."
 
   ;; RUST -------------------------------
   ;; (setq rust
+  (add-hook 'before-save-hook
+            (lambda () (when (eq 'rust-mode major-mode)
+                                (lsp-format-buffer))))
+
   (add-hook 'rust-mode-hook
             (lambda () (setq rustic-indent-offset 2)))
   ;; (setq rust-indent-offset 2)
